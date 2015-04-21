@@ -64,6 +64,18 @@ OBJS_AS = $(addprefix $(OUTPUT_PATH), $(SRCS_AS:.s=.os))
 
 all: $(OBJS) $(OBJS_AS) $(HEX)
 
+### Targets
+.PHONY: debug
+debug:    CFLAGS += -DDEBUG -g3 -O0
+debug:    ASMFLAGS += -DDEBUG -g3 -O0
+debug:    all
+
+release: clean
+release:  CFLAGS += -DNDEBUG -O3
+release:  ASMFLAGS += -DNDEBUG -O3
+release:  all
+
+
 rebuild: clean all
 
 ifeq ($(OS),Windows_NT)
